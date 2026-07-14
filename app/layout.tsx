@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { Lato } from "next/font/google";
+import { Geist, Inter } from "next/font/google";
 import "./globals.css";
+import { Navbar } from "./components/ui/Navbar";
 
+const geist = Geist({
+  variable: "--font-geist",
+  subsets: ["latin"],
+});
 
-const lato = Lato({
-  variable: "--font-Lato",
-  weight: ["100", "300", "400", "700", "900"],
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -21,7 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={lato.variable}>{children}</body>
+      <body className={`${inter.variable} ${geist.variable}`}>
+        <Navbar/>
+        {children}
+      </body>
     </html>
   );
 }
