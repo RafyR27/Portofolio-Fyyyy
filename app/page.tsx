@@ -143,19 +143,18 @@ export default function Home() {
       <div className="screen bg-black fixed inset-0 origin-top z-50"></div>
 
       <div
-        className={`w-full min-h-screen ${finish ? "block" : "hidden"} lg:px-12 px-8`}
+        className={`w-full min-h-screen ${finish ? "block" : "hidden"} lg:px-12 px-5`}
       >
         <div
           id="main"
-          className="min-h-screen opacity-0 translate-y-10 my-10 mb-25 gap-10 flex flex-col items-center"
+          className="min-h-screen opacity-0 translate-y-10 my-15 mb-25 gap-10 flex flex-col items-center"
         >
           {/* Hero */}
-          <div className="max-w-3xl w-full h-auto flex gap-10">
+          <div className="max-w-3xl w-full h-auto flex lg:flex-row flex-col-reverse gap-5 lg:gap-10">
             <div className="w-full flex flex-col justify-center gap-1">
-              <h1 className="font-bold text-[2.5rem]">Hi, I&apos;m Rafy</h1>
-              <p className="text-muted-foreground text-[1.1rem]">
-                Software Engineer turned Entrepreneur. I love building things
-                and helping people. Very active on Twitter.
+              <h1 className="font-bold text-[2.5rem]">Hi, I&apos;m {DATA.callname}</h1>
+              <p className="text-muted-foreground text-[1rem]">
+                {DATA.description}
               </p>
             </div>
             <Avatar size="lg">
@@ -167,19 +166,13 @@ export default function Home() {
           {/* About */}
           <div className="max-w-3xl w-full h-auto flex flex-col gap-3">
             <h2 className="font-bold text-[1.1rem]">About</h2>
-            <p className="text-muted-foreground text-[1.1rem]">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-              natus illum ratione aut quod molestiae eum velit quis reiciendis
-              voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Ipsa et enim nisi nobis nulla dolorum adipisci at dolores
-              dolor explicabo? Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Dignissimos, pariatur? Eos voluptatum ullam
-              dolor sequi suscipit corrupti cupiditate quae quaerat!
+            <p className="text-muted-foreground text-[1rem]">
+              {DATA.about}
             </p>
           </div>
 
           {/* Education */}
-          <div className="max-w-3xl w-full h-auto flex flex-col gap-8">
+          <div className="max-w-3xl w-full h-auto flex flex-col gap-6">
             <h2 className="font-bold text-[1.1rem]">Education</h2>
             <div className="flex flex-col gap-8">
               {DATA.educations.map((education: any) => (
@@ -198,7 +191,7 @@ export default function Home() {
                     ) : (
                       <div className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border bg-muted flex-none" />
                     )}
-                    <div className="flex-1 min-w-0 flex flex-col gap-0.5">
+                    <div className="flex-1 min-w-0 flex flex-col gap-2">
                       <div className="font-semibold leading-none flex items-center gap-2">
                         {education.school}
                         <ArrowUpRight
@@ -222,8 +215,8 @@ export default function Home() {
           </div>
 
           {/* skills */}
-          <div className="max-w-3xl w-full h-auto flex flex-col gap-3">
-            <h2 className="font-bold text-[1.1rem]">Skill</h2>
+          <div className="max-w-3xl w-full h-auto flex flex-col gap-6">
+            <h2 className="font-bold text-[1.1rem]">Skills</h2>
             <div className="flex flex-wrap gap-2">
               {DATA.skills.map((skill: any) => (
                 <div
