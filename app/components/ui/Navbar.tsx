@@ -6,52 +6,70 @@ import { Separator } from "./separator";
 import { AnimatedThemeToggler } from "./animated-theme-toggler";
 import Link from "next/link";
 import { DATA } from "@/app/data/resume";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function Navbar() {
+  const { resolvedTheme, setTheme } = useTheme();
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
-    <div className="fixed inset-x-0 bottom-4 z-30">
-      <div className="relative">
-        <Dock
-          direction="middle"
-          className="z-50 pointer-events-auto relative h-14 p-2 w-fit mx-auto flex gap-2 border bg-card/90 backdrop-blur-3xl shadow-[0_0_10px_3px] shadow-primary/5"
-        >
+    <div className="pointer-events-none fixed inset-x-0 bottom-4 z-30">
+      <Dock
+        direction="middle"
+        className="z-50 pointer-events-auto relative h-14 p-2 w-fit mx-auto flex gap-2 border bg-card/90 backdrop-blur-3xl shadow-[0_0_10px_3px] shadow-primary/5"
+      >
+        <DockIcon className="hover:text-muted-foreground transition-colors">
           <Link href={DATA.webUrl}>
-            <DockIcon className="hover:text-muted-foreground transition-colors">
-              <Icons.home className="size-6" />
-            </DockIcon>
+            <Icons.home className="size-6" />
           </Link>
+        </DockIcon>
 
-          <Separator
-            orientation="vertical"
-            className="h-2/3 m-auto w-px bg-border"
-          />
+        <Separator
+          orientation="vertical"
+          className="h-2/3 m-auto w-px bg-border"
+        />
 
+        <DockIcon className="hover:text-muted-foreground transition-colors">
           <Link href={DATA.githubUrl} target="_blank">
-            <DockIcon className="hover:text-muted-foreground transition-colors">
-              <Icons.gitHub className="size-7" />
-            </DockIcon>
+            <Icons.gitHub className="size-7" />
           </Link>
+        </DockIcon>
+
+        <DockIcon className="hover:text-muted-foreground transition-colors">
           <Link href={DATA.linkedinUrl} target="_blank">
-            <DockIcon className="hover:text-muted-foreground transition-colors">
-              <Icons.linkedin className="size-7" />
-            </DockIcon>
+            <Icons.linkedin className="size-7" />
           </Link>
+        </DockIcon>
+
+        <DockIcon className="hover:text-muted-foreground transition-colors">
           <Link href={DATA.instagramUrl} target="_blank">
-            <DockIcon className="hover:text-muted-foreground transition-colors">
-              <Icons.instagram className="size-7" />
-            </DockIcon>
+            <Icons.instagram className="size-7" />
           </Link>
+        </DockIcon>
 
-          <Separator
-            orientation="vertical"
-            className="h-2/3 m-auto w-px bg-border"
+        <Separator
+          orientation="vertical"
+          className="h-2/3 m-auto w-px bg-border"
+        />
+
+        <DockIcon className="hover:text-muted-foreground transition-colors">
+          <AnimatedThemeToggler
+            duration={600}
+            className="cursor-pointer"
+            theme={resolvedTheme as "light" | "dark"}
+            onThemeChange={setTheme}
           />
-
-          <DockIcon className="hover:text-muted-foreground transition-colors">
-            <AnimatedThemeToggler duration={600} className="cursor-pointer" />
-          </DockIcon>
-        </Dock>
-      </div>
+        </DockIcon>
+      </Dock>
     </div>
   );
 }

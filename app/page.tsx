@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useScreen from "./hooks/useScreen";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -10,12 +10,26 @@ import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import { ArrowUpRight } from "lucide-react";
 import { DATA } from "./data/resume";
 import Image from "next/image";
+import Link from "next/link";
+import { Badge } from "./components/ui/badge";
+import { GitHubCalendar } from "react-github-calendar";
+import { useTheme } from "next-themes";
+import { MatchaCursor } from "./components/svgs/MatchaCursor";
+import { Pointer } from "./components/ui/pointer";
+import { Highlighter } from "./components/ui/highlighter";
 
 gsap.registerPlugin(MorphSVGPlugin);
 
 export default function Home() {
   const [finish, setFinish] = useState(false);
   const animateScreen = useScreen();
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -80,6 +94,7 @@ export default function Home() {
 
   return (
     <>
+      {/* Loading screen */}
       <div
         className={`h-screen flex justify-center items-center ${finish ? "hidden" : "block"} relative`}
       >
@@ -142,24 +157,40 @@ export default function Home() {
 
       <div className="screen bg-black fixed inset-0 origin-top z-50"></div>
 
+      {/* Main */}
       <div
         className={`w-full min-h-screen ${finish ? "block" : "hidden"} lg:px-12 px-5`}
       >
         <div
           id="main"
-          className="min-h-screen opacity-0 translate-y-10 my-15 mb-25 gap-10 flex flex-col items-center"
+          className="min-h-screen opacity-0 translate-y-10 my-15 mb-25 gap-15 flex flex-col items-center"
         >
           {/* Hero */}
           <div className="max-w-3xl w-full h-auto flex lg:flex-row flex-col-reverse gap-5 lg:gap-10">
             <div className="w-full flex flex-col justify-center gap-1">
-              <h1 className="font-bold text-[2.5rem]">Hi, I&apos;m {DATA.callname}</h1>
-              <p className="text-muted-foreground text-[1rem]">
-                {DATA.description}
-              </p>
+              <h1 className="font-bold text-[2.5rem]">
+                Hi, I&apos;m {DATA.callname}
+              </h1>
+              <div className="text-muted-foreground text-[1rem]">
+                {DATA.description}{" "}
+                <Highlighter action="underline" color="#7BA05B">
+                  <span className="text-[#7BA05B]">
+                    Matcha enjoyer.
+                    <Pointer
+                      style={{
+                        x: -65,
+                        y: -70,
+                      }}
+                    >
+                      <MatchaCursor className="size-8 hidden lg:flex" />
+                    </Pointer>
+                  </span>
+                </Highlighter>
+              </div>
             </div>
             <Avatar size="lg">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src={DATA.profile} />
+              <AvatarFallback>FY</AvatarFallback>
             </Avatar>
           </div>
 
@@ -167,8 +198,139 @@ export default function Home() {
           <div className="max-w-3xl w-full h-auto flex flex-col gap-3">
             <h2 className="font-bold text-[1.1rem]">About</h2>
             <p className="text-muted-foreground text-[1rem]">
-              {DATA.about}
+              Since 2024, I have been deepening my fundamentals in{" "}
+              <Highlighter action="underline" color="#7BA05B">
+                web development
+              </Highlighter>{" "}
+              by building various web applications. Although I am currently
+              still studying Informatics at university,{" "}
+              <Highlighter action="underline" color="#7BA05B">
+                I actively learn independently
+              </Highlighter>{" "}
+              through personal projects and by exploring various technologies.
+              Backed by that experience, I have been{" "}
+              <Highlighter action="underline" color="#7BA05B">
+                trusted to develop web applications
+              </Highlighter>{" "}
+              used by real-world users. I enjoy building applications that not
+              only function well, but are also genuinely useful to their users.
             </p>
+          </div>
+
+          {/* Project */}
+          <div className="max-w-3xl w-full h-auto flex flex-col gap-6">
+            <div className="flex min-h-0 flex-col gap-y-8">
+              <div className="flex flex-col gap-y-2 items-center justify-center">
+                <div className="flex justify-center items-center w-full">
+                  <Badge variant={"default"} className="text-sm py-3.5 px-4">
+                    My Projects
+                  </Badge>
+                </div>
+                <div className="flex flex-col gap-y-3 items-center justify-center">
+                  <h2 className="text-[1.5rem] font-bold tracking-tighter">
+                    Real world projects I&apos;ve built
+                  </h2>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-200 mx-auto auto-rows-fr">
+                {DATA.projects.map((project) => (
+                  <div
+                    key={project.title}
+                    className={
+                      "flex flex-col h-full border border-border rounded-xl overflow-hidden hover:ring-2 hover:ring-muted transition-all duration-200"
+                    }
+                  >
+                    <div className="relative shrink-0">
+                      <Link
+                        href={project.active ? project.href : "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block"
+                      >
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          width={500}
+                          height={500}
+                          className="w-full h-48 object-cover"
+                        />
+                      </Link>
+                      {project.links && project.links.length > 0 && (
+                        <div className="absolute top-2 right-2 flex flex-wrap gap-2">
+                          {project.links.map((link, idx) => (
+                            <Link
+                              key={idx}
+                              href={project.active ? link.href : "#"}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Badge
+                                className="flex items-center gap-1.5 text-xs bg-black text-white hover:bg-black/90"
+                                variant="default"
+                              >
+                                {link.icon}
+                                {link.type}
+                              </Badge>
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-6 flex flex-col gap-3 flex-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex flex-col gap-1">
+                          <h3 className="font-semibold">{project.title}</h3>
+                          <time className="text-xs text-muted-foreground">
+                            {project.dates}
+                          </time>
+                        </div>
+                        {project.active && (
+                          <Link
+                            href={project.active ? project.href : "#"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                          >
+                            <ArrowUpRight className="h-4 w-4" aria-hidden />
+                          </Link>
+                        )}
+                      </div>
+                      <div className="text-xs flex-1 prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
+                        {project.description}
+                      </div>
+                      {project.technologies &&
+                        project.technologies.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-auto">
+                            {project.technologies.map((tag) => (
+                              <Badge
+                                key={tag}
+                                className="text-[11px] font-medium border border-border h-6 w-fit px-2"
+                                variant="outline"
+                              >
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Github Contribution */}
+          <div className="max-w-3xl w-full h-auto flex flex-col gap-6">
+            <h2 className="font-bold text-[1.1rem]">Github Contribution</h2>
+            <div className="flex flex-wrap gap-2">
+              {mounted && (
+                <GitHubCalendar
+                  username="RafyR27"
+                  colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
+                />
+              )}
+            </div>
           </div>
 
           {/* Education */}
@@ -186,6 +348,8 @@ export default function Home() {
                       <Image
                         src={education.logoUrl}
                         alt={education.school}
+                        width={500}
+                        height={500}
                         className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border overflow-hidden object-contain flex-none"
                       />
                     ) : (
@@ -194,10 +358,6 @@ export default function Home() {
                     <div className="flex-1 min-w-0 flex flex-col gap-2">
                       <div className="font-semibold leading-none flex items-center gap-2">
                         {education.school}
-                        <ArrowUpRight
-                          className="h-3.5 w-3.5 text-muted-foreground opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
-                          aria-hidden
-                        />
                       </div>
                       <div className="font-sans text-sm text-muted-foreground">
                         {education.degree}
