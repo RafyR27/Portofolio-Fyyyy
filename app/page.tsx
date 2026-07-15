@@ -188,7 +188,7 @@ export default function Home() {
                 </Highlighter>
               </div>
             </div>
-            <Avatar size="lg">
+            <Avatar className="size-30 md:size-35 lg:size-40">
               <AvatarImage src={DATA.profile} />
               <AvatarFallback>FY</AvatarFallback>
             </Avatar>
