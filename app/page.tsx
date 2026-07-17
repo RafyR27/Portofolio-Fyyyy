@@ -86,18 +86,6 @@ export default function Home() {
     }
   }, [finish]);
 
-  const tl = gsap.timeline({ paused: true });
-
-  useGSAP(() => {
-    if (finish) {
-      tl?.to("#wings-nav", {
-        morphSVG: "#smile-nav",
-        duration: 0.4,
-        ease: "power2.inOut",
-      });
-    }
-  }, [finish]);
-
   return (
     <>
       {/* Loading screen */}
