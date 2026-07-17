@@ -7,7 +7,7 @@ import { NodejsIconDark } from "../components/svgs/NodejsIconDark";
 import { ReactIconDark } from "../components/svgs/ReactIconDark";
 import { TypescriptIconDark } from "../components/svgs/TypescriptIconDark";
 
-export const DATA = {
+export const DATA_ID = {
   name: "Muhamad Rafy Ramadhan",
   callname: "Rafy",
   profile: "/profile.webp",
@@ -16,9 +16,33 @@ export const DATA = {
   linkedinUrl: "https://www.linkedin.com/in/muhamad-rafy-ramadhan/",
   instagramUrl: "https://www.instagram.com/rafyr27",
   description:
-    "Web Developer Enthusiast. I enjoy building things, solving problems, and creating great user experiences.",
-  about:
-    "Since 2024, I have been deepening my fundamentals in web development by building various web applications. Although I am currently still studying Informatics at university, I actively learn independently through personal projects and by exploring various technologies. Backed by that experience, I have been trusted to develop web applications used by real-world users. I enjoy building applications that not only function well, but are also genuinely useful to their users.",
+    "Web Developer Enthusiast. Saya senang membangun sesuatu, memecahkan masalah, dan menciptakan pengalaman pengguna yang baik.",
+  about: [
+    {
+      text: "Sejak tahun 2024, saya telah memperdalam fundamental saya dalam ",
+    },
+    {
+      text: "pengembangan web",
+      highlight: true,
+    },
+    {
+      text: " dengan membangun berbagai aplikasi web. Meskipun saat ini masih menempuh studi Informatika di universitas, ",
+    },
+    {
+      text: "saya aktif belajar secara mandiri",
+      highlight: true,
+    },
+    {
+      text: " melalui proyek pribadi dan eksplorasi berbagai teknologi. Dengan bekal pengalaman tersebut, saya telah ",
+    },
+    {
+      text: "dipercaya untuk mengembangkan aplikasi web",
+      highlight: true,
+    },
+    {
+      text: " yang digunakan oleh pengguna nyata. Saya senang membangun aplikasi yang tidak hanya berfungsi dengan baik, tetapi juga benar-benar bermanfaat bagi penggunanya.",
+    },
+  ],
   skills: [
     { name: "Next.js", icon: NextjsIconDark },
     { name: "React", icon: ReactIconDark },
@@ -30,15 +54,15 @@ export const DATA = {
   ],
   educations: [
     {
-      school: "University of Singaperbangsa Karawang",
-      degree: "Bachelor's Degree of Computer Science",
+      school: "Universitas Singaperbangsa Karawang",
+      degree: "Sarjana Ilmu Komputer",
       logoUrl: "/unsika-logo.webp",
       start: "2024",
-      end: "Now",
+      end: "Sekarang",
     },
     {
       school: "SMAN 1 Karawang",
-      degree: "Science",
+      degree: "IPA",
       logoUrl: "/smansa-logo.webp",
       start: "2020",
       end: "2024",
@@ -51,7 +75,7 @@ export const DATA = {
       dates: "Sep 2025 - Jan 2026",
       active: false,
       description:
-        "A web application for managing Karawang Education Fair ticket sales, both online and offline. Equipped with an admin panel for ticket management, Midtrans Payment Gateway integration for online payments, and automatic e-ticket delivery via email upon successful payment. The system also supports visitor check-in during event entry.",
+        "Sebuah aplikasi web untuk mengelola penjualan tiket Karawang Education Fair, baik secara online maupun offline. Dilengkapi dengan panel admin untuk manajemen tiket, integrasi Payment Gateway Midtrans untuk pembayaran online, serta pengiriman e-tiket otomatis melalui email setelah pembayaran berhasil. Sistem ini juga mendukung check-in pengunjung saat masuk acara.",
       technologies: [
         "Next.js",
         "Typescript",
@@ -59,7 +83,7 @@ export const DATA = {
         "TailwindCSS",
         "Midtrans",
         "Hero UI",
-        "Better Auth",
+        "NextAuth",
       ],
       links: [
         {
@@ -76,14 +100,14 @@ export const DATA = {
       dates: "Nov 2025 - Jan 2026",
       active: true,
       description:
-        "A web application developed to publish and manage current news, catering to both the campus community and the general public. The application implements a Role-Based Access Control (RBAC) system with two main roles: Admin, responsible for managing users and the overall system, and Author, responsible for creating, editing, and publishing news articles.",
+        "Sebuah aplikasi web yang dikembangkan untuk mempublikasikan dan mengelola berita terkini, ditujukan bagi civitas akademika kampus maupun masyarakat umum. Aplikasi ini menerapkan sistem Role-Based Access Control (RBAC) dengan dua peran utama: Admin, yang bertanggung jawab mengelola pengguna dan sistem secara keseluruhan, serta Author, yang bertanggung jawab membuat, mengedit, dan mempublikasikan artikel berita.",
       technologies: [
         "Next.js",
         "Typescript",
         "Mongodb",
         "TailwindCSS",
         "Hero UI",
-        "Better Auth",
+        "NextAuth",
       ],
       links: [
         {

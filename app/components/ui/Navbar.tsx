@@ -1,16 +1,19 @@
 "use client";
 
-import { House } from "lucide-react";
+import { House, Languages } from "lucide-react";
 import { Dock, DockIcon } from "./dock";
 import { Separator } from "./separator";
 import { AnimatedThemeToggler } from "./animated-theme-toggler";
 import Link from "next/link";
-import { DATA } from "@/app/data/resume";
+import { DATA_EN } from "@/app/data/resume-en";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/app/hooks/language-provider";
+import { DATA_ID } from "@/app/data/resume-id";
 
 export function Navbar() {
   const { resolvedTheme, setTheme } = useTheme();
+  const { language, setLanguage } = useLanguage();
 
   const [mounted, setMounted] = useState(false);
 
@@ -20,6 +23,8 @@ export function Navbar() {
   }, []);
 
   if (!mounted) return null;
+
+  const DATA = language === "id" ? DATA_ID : DATA_EN;
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-4 z-30">
@@ -39,19 +44,19 @@ export function Navbar() {
         />
 
         <DockIcon className="hover:text-muted-foreground transition-colors">
-          <Link href={DATA.githubUrl} target="_blank">
+          <Link href={DATA_EN.githubUrl} target="_blank">
             <Icons.gitHub className="size-7" />
           </Link>
         </DockIcon>
 
         <DockIcon className="hover:text-muted-foreground transition-colors">
-          <Link href={DATA.linkedinUrl} target="_blank">
+          <Link href={DATA_EN.linkedinUrl} target="_blank">
             <Icons.linkedin className="size-7" />
           </Link>
         </DockIcon>
 
         <DockIcon className="hover:text-muted-foreground transition-colors">
-          <Link href={DATA.instagramUrl} target="_blank">
+          <Link href={DATA_EN.instagramUrl} target="_blank">
             <Icons.instagram className="size-7" />
           </Link>
         </DockIcon>
@@ -60,6 +65,15 @@ export function Navbar() {
           orientation="vertical"
           className="h-2/3 m-auto w-px bg-border"
         />
+
+        <DockIcon className="hover:text-muted-foreground transition-colors">
+          <button
+            onClick={() => setLanguage(language === "id" ? "en" : "id")}
+            className="cursor-pointer"
+          >
+            <Icons.language className="size-5.5" />
+          </button>
+        </DockIcon>
 
         <DockIcon className="hover:text-muted-foreground transition-colors">
           <AnimatedThemeToggler
@@ -78,6 +92,7 @@ export type IconProps = React.HTMLAttributes<SVGElement>;
 
 const Icons = {
   home: (props: IconProps) => <House {...props} />,
+  language: (props: IconProps) => <Languages {...props} />,
   gitHub: (props: IconProps) => (
     <svg
       {...props}

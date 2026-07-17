@@ -8,7 +8,7 @@ import gsap from "gsap";
 import { MorphSVGPlugin } from "gsap/all";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import { ArrowUpRight } from "lucide-react";
-import { DATA } from "./data/resume";
+import { DATA_EN } from "./data/resume-en";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "./components/ui/badge";
@@ -17,6 +17,9 @@ import { useTheme } from "next-themes";
 import { MatchaCursor } from "./components/svgs/MatchaCursor";
 import { Pointer } from "./components/ui/pointer";
 import { Highlighter } from "./components/ui/highlighter";
+import { InteractiveHoverButton } from "./components/ui/interactive-hover-button";
+import { useLanguage } from "./hooks/language-provider";
+import { DATA_ID } from "./data/resume-id";
 
 gsap.registerPlugin(MorphSVGPlugin);
 
@@ -25,6 +28,9 @@ export default function Home() {
   const animateScreen = useScreen();
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
+  const { language } = useLanguage();
+
+  const DATA = language === "id" ? DATA_ID : DATA_EN;
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -189,7 +195,7 @@ export default function Home() {
               </div>
             </div>
             <Avatar className="size-30 md:size-35 lg:size-40">
-              <AvatarImage src={DATA.profile} />
+              <AvatarImage src={DATA_EN.profile} />
               <AvatarFallback>FY</AvatarFallback>
             </Avatar>
           </div>
@@ -198,22 +204,15 @@ export default function Home() {
           <div className="max-w-3xl w-full h-auto flex flex-col gap-3">
             <h2 className="font-bold text-[1.1rem]">About</h2>
             <p className="text-muted-foreground text-[1rem]">
-              Since 2024, I have been deepening my fundamentals in{" "}
-              <Highlighter action="underline" color="#7BA05B">
-                web development
-              </Highlighter>{" "}
-              by building various web applications. Although I am currently
-              still studying Informatics at university,{" "}
-              <Highlighter action="underline" color="#7BA05B">
-                I actively learn independently
-              </Highlighter>{" "}
-              through personal projects and by exploring various technologies.
-              Backed by that experience, I have been{" "}
-              <Highlighter action="underline" color="#7BA05B">
-                trusted to develop web applications
-              </Highlighter>{" "}
-              used by real-world users. I enjoy building applications that not
-              only function well, but are also genuinely useful to their users.
+              {DATA.about.map((item, index) =>
+                item.highlight ? (
+                  <Highlighter key={index} action="underline" color="#7BA05B">
+                    {item.text}
+                  </Highlighter>
+                ) : (
+                  <span key={index}>{item.text}</span>
+                ),
+              )}
             </p>
           </div>
 
@@ -221,11 +220,6 @@ export default function Home() {
           <div className="max-w-3xl w-full h-auto flex flex-col gap-6">
             <div className="flex min-h-0 flex-col gap-y-8">
               <div className="flex flex-col gap-y-2 items-center justify-center">
-                <div className="flex justify-center items-center w-full">
-                  <Badge variant={"default"} className="text-sm py-3.5 px-4">
-                    My Projects
-                  </Badge>
-                </div>
                 <div className="flex flex-col gap-y-3 items-center justify-center">
                   <h2 className="text-[1.5rem] font-bold tracking-tighter">
                     Real world projects I&apos;ve built
@@ -392,6 +386,18 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Get in touch */}
+          <div className="max-w-3xl w-full h-auto flex flex-col items-center gap-6 mt-5 mb-10">
+            <h2 className="font-bold text-[2rem] text-center">
+              {language === "en"
+                ? "Let's make something great together."
+                : "Mari wujudkan sesuatu yang luar biasa bersama."}
+            </h2>
+            <Link href="/contact">
+              <InteractiveHoverButton>Get in Touch</InteractiveHoverButton>
+            </Link>
           </div>
         </div>
       </div>
